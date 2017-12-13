@@ -4,6 +4,7 @@ import sys
 import numpy as np
 
 import dynesty
+from datetime import datetime
 
 from .fitutils import airtovacuum
 
@@ -106,7 +107,7 @@ class FitPayne(object):
 							[0.0,0.1],
 							[0.0,0.1],
 							])
-					self.fitargs['norm_polyorder'] = sel.polyorder
+					self.fitargs['norm_polyorder'] = self.polyorder
 					# re-scale the wavelength array from -1 to 1 for the Cheb poly
 					self.fitargs['obs_wave_fit_norm'] = (
 						self.fitargs['obs_wave_fit'] - self.fitargs['obs_wave_fit'].min())
@@ -178,6 +179,7 @@ class FitPayne(object):
 
 		# run sampler
 		sampler = self.runsampler(samplerdict)
+		self.sampler = sampler
 
 	def _initoutput(self):
 		# init output file
