@@ -15,7 +15,7 @@ inputdict['spec']['obs_wave'] = demospec['WAVE']
 inputdict['spec']['obs_flux'] = demospec['FLUX']
 # error of SNR = 50
 inputdict['spec']['obs_eflux'] = demospec['FLUX']/50.0
-# inputdict['spec']['normspec']['bool'] = True
+inputdict['spec']['normspec'] = True
 
 inputdict['phot'] = {}
 inputdict['photANNpath'] = 'SED/'
