@@ -2,6 +2,7 @@ from Payne.fitting import fitstar
 from astropy.table import Table
 import numpy as np
 import sys
+import pickle
 
 print('-------- RUNNING MOCK SOLAR DEMO ---------')
 
@@ -9,7 +10,7 @@ demospec = Table.read('demo_spec.fits',format='fits')
 
 inputdict = {}
 inputdict['spec'] = {}
-inputdict['specANNpath'] = '/Users/pcargile/Astro/GITREPOS/ThePayne/data/specANN/Hecto_T2K_C3K.h5'
+inputdict['specANNpath'] = 'nn_spec.h5'
 inputdict['spec']['obs_wave'] = demospec['WAVE']
 inputdict['spec']['obs_flux'] = demospec['FLUX']
 # error of SNR = 50
@@ -28,7 +29,7 @@ inputdict['spec']['obs_eflux'] = demospec['FLUX']/50.0
 # 	])
 
 inputdict['phot'] = {}
-inputdict['photANNpath'] = '/Users/pcargile/Astro/GITREPOS/ThePayne/data/photANN/'
+inputdict['photANNpath'] = 'SED/'
 inputdict['phot']['Tycho_B'] = [6.9169,0.1]
 inputdict['phot']['Tycho_V'] = [5.8940,0.1]
 
@@ -41,6 +42,8 @@ inputdict['sampler']['samplemethod'] = 'rwalk'
 inputdict['sampler']['npoints'] = 50
 inputdict['sampler']['samplertype'] = 'single'
 inputdict['sampler']['flushnum'] = 100
+#inputdict['sampler']['delta_logz_final'] = 0.01
+#inputdict['sampler']['maxiter'] = 200
 
 inputdict['output'] = 'OUTPUTFILE.dat'
 
@@ -65,4 +68,6 @@ print('--------------')
 
 sys.stdout.flush()
 result = FS.run(inputdict=inputdict)
+
+pickle.dump(FS.sampler.results, open('res.pkl','wb'))
 
